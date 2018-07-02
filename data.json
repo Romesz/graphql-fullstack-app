@@ -1,0 +1,14 @@
+{
+    "players":[
+        {
+            "id": 0,
+            "name" : "Thierry Henry",
+            "position" : "forward"
+        },
+        {
+            "id": 1,
+            "name" : "Olivier Giroud",
+            "position" : "forward"
+        }
+    ]
+}

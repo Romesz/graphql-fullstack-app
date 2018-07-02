@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>GraphQL example</title>
+</head>
+<body>
+    <div id="resp"></div>
+    <script>
+        (async () => {
+            const id = 1;
+            const query = `{
+                getPlayer(id: ${id}){id, name, position},
+                getPlayers {id, name, position}
+            }`;
+            const changePosQuery = `
+            mutation updatePlayerPos($id: Int!, $position: String!) {
+                updatePlayerPos(id: $id, position: $position) {id}
+            }
+            `;
+            const variables = {
+                id: 1,
+                position: "back"
+            };
+
+            await fetch('http://localhost:3000/graphql', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    query: changePosQuery,
+                    variables
+                })
+            });
+
+            fetch('http://localhost:3000/graphql', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    query
+                })
+            })
+            .then((resp) => resp.json())
+            .then(function(data) {
+                console.log(data);
+                document.getElementById('resp').innerHTML = JSON.stringify(data);
+            });
+        })();
+    </script>
+</body>
+</html>
